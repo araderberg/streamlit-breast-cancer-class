@@ -1,5 +1,5 @@
 streamlit 
-sklearn.metrics
+scikit-learn
 numpy
 matplotlib.pyplot 
 sklearn.datasets
