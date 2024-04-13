@@ -1,0 +1,7 @@
+streamlit 
+sklearn.metrics
+numpy
+matplotlib.pyplot 
+sklearn.datasets
+sklearn.naive_bayes
+sklearn.model_selection
