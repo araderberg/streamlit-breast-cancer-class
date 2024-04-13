@@ -1,7 +1,4 @@
-streamlit 
+streamlit
 scikit-learn
 numpy
-matplotlib.pyplot 
-sklearn.datasets
-sklearn.naive_bayes
-sklearn.model_selection
+matplotlib
