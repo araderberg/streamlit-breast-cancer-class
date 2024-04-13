@@ -11,7 +11,7 @@ All apps created using Streamlit and Python
 Python 3.12.2 | Streamlit
 
 <H3>Deployments</H3>
-https://data-science-collision.streamlit.app/
+https://breast-cancer-binclass.streamlit.app/
 
 <H3>Show Me</H3>
 
