@@ -31,13 +31,11 @@ def run_classification():
     # Fit a Naive Bayes model
     clf = GaussianNB().fit(X_train, y_train)
 
-    # Define fig variable
-    fig = None
+    # Predict probability
+    y_prob_train = clf.predict_proba(X_train)[:, 1]
+    y_prob_test = clf.predict_proba(X_test)[:, 1]
 
     if classifier == "Precision-Recall curve":
-        # Predict probability for training set
-        y_prob_train = clf.predict_proba(X_train)[:, 1]
-        
         # Plot Precision-Recall curve
         fig, ax = plt.subplots()
         precision, recall, thresholds = precision_recall_curve(y_train, y_prob_train)
@@ -48,38 +46,33 @@ def run_classification():
         st.pyplot(fig)
 
     elif classifier == "ROC Curve":
-        # Predict probability for test set
-        y_prob_test = clf.predict_proba(X_test)[:, 1]
-
         # Plot ROC curve
-        fig, ax = plt.subplots()
+        fig_roc, ax_roc = plt.subplots()
         fpr, tpr, _ = roc_curve(y_test, y_prob_test)
         auc_score = roc_auc_score(y_test, y_prob_test)
-        ax.plot(fpr, tpr, label=f"ROC Curve (AUC={auc_score:.2f})")
-        ax.plot([0, 1], [0, 1], linestyle='--', color='red')
-        ax.set_xlabel("False Positive Rate")
-        ax.set_ylabel("True Positive Rate")
-        ax.set_title("ROC Curve")
-        ax.legend()
-        st.pyplot(fig)
+        ax_roc.plot(fpr, tpr, label=f"ROC Curve (AUC={auc_score:.2f})")
+        ax_roc.plot([0, 1], [0, 1], linestyle='--', color='red')
+        ax_roc.set_xlabel("False Positive Rate")
+        ax_roc.set_ylabel("True Positive Rate")
+        ax_roc.set_title("ROC Curve")
+        ax_roc.legend()
+        st.pyplot(fig_roc)
 
     elif classifier == "Confusion Matrix":
-        # Predict probability for test set
-        y_pred_test = clf.predict(X_test)
-
         # Confusion Matrix
+        y_pred_test = clf.predict(X_test)
         cm = confusion_matrix(y_test, y_pred_test)
         st.subheader("Confusion Matrix")
         st.write(cm)
         # Assuming `cm` is your confusion matrix
         cm_display = ConfusionMatrixDisplay(cm).plot()
         # Display the confusion matrix plot using st.pyplot()
-        st.pyplot(cm_display.figure_)
+        st.pyplot(fig=cm_display.figure_)
 
     if st.sidebar.checkbox("Show raw data", False):
         st.subheader("Brest Cancer Data Set (Classification)")
         st.write(data)
         st.markdown("This [data set](https://goo.gl/U2Uwz2) includes Number of Attributes: 30 numeric, predictive attributes and the class.")
-    
+
 if __name__ == '__main__':
     main()
